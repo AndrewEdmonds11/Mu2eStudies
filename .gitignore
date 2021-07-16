@@ -1,0 +1,6 @@
+*.art
+*.root
+*.cfg
+*~
+*.lst
+*/grid_fcl/*
