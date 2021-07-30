@@ -1,0 +1,4 @@
+Other Muse packages used
+ - AndrewEdmonds11/Offline:helium-vs-vacuum 90028223a
+   -  branched off Mu2e/Offline:main 0f4af86d6 (between v10_03_00 and v10_04_00) with one code change so that the DSVacuum material was obtained directly from tracker object
+ - Mu2e/Production:main 90e0a93
