@@ -1,0 +1,49 @@
+#include "Production/JobConfig/beam/MuBeamResampler.fcl"
+
+physics.filters.EarlyPrescaleFilter.nPrescale : 1
+physics.filters.TargetStopPrescaleFilter.nPrescale : 1
+
+
+physics.producers.compressPVOOTStops: {
+         module_type: CompressPhysicalVolumes
+         volumesInput : "g4run"
+         hitInputs : []
+         particleInputs : [ "OOTStopFilter" ]
+      }
+
+physics.producers.OOTMuonFinder : {
+         module_type : StoppedParticlesFinder
+         particleInput : "g4run"
+         useEventLevelVolumeInfo: true
+         physVolInfoInput: "g4run:eventlevel"
+	 vetoedMaterials : ["IPAPolyethylene", "StoppingTarget_Al"]
+         particleTypes : [ 13, -13 ]
+         verbosityLevel: 1
+      }
+
+
+physics.filters.OOTStopFilter: {
+         module_type: FilterG4Out
+         mainHitInputs: []
+         extraHitInputs: [ "g4run:virtualdetector" ]
+         mainSPPtrInputs: [ "OOTMuonFinder" ]
+}
+
+physics.OOTStopPath : [ @sequence::Beam.beamResamplerSequence, @sequence::Common.g4Sequence, OOTMuonFinder, OOTStopFilter, compressPVOOTStops]
+
+physics.trigger_paths: [ @sequence::physics.trigger_paths, OOTStopPath ]
+physics.outPath : [ @sequence::physics.outPath, OOTStopOutput ]
+
+outputs.OOTStopOutput : {
+    module_type: RootOutput
+    outputCommands:   [ "drop *_*_*_*",
+      @sequence::Beam.SimKeptProducts,
+      "keep *_OOTStopFilter_*_*",
+      "keep *_compressPVOOTStops_*_*"
+    ]
+    SelectEvents: [OOTStopPath]
+    fileName : "sim.owner.OOTStops.version.sequencer.art"
+  }
+
+#physics.producers.g4run.debug.trackingVerbosityLevel : 1
+#physics.producers.g4run.debug.steppingVerbosityLevel : 1

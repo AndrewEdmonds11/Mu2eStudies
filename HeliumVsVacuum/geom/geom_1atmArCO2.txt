@@ -1,0 +1,4 @@
+// Properties of the G4Material PSVacuum.
+double PS.vacuumPressure      = 760;       // torr
+double ds.vacuumPressure     = 760;      // torr
+

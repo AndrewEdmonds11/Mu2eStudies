@@ -1,0 +1,10 @@
+// Properties of the G4Material PSVacuum.
+double PS.vacuumPressure      = 760;       // torr
+string PS.vacuumG4Material    = "G4_He";     // name of the G4Material for the existing gas.
+
+// DetectorSolenoid
+double ds.vacuumPressure     = 760;      // torr
+// Replace "StrawGas" with G4_He
+vector<string> tracker.strawMaterials = { "G4_MYLAR", "G4_He", "G4_W" };
+vector<string> trackerSupport.beam1.serviceMaterials  = {"G4_Cu", "G4_Cu", "G4_He", "G4_SILICON_DIOXIDE", "G4_Cu"} ;
+string trackerSupport.electronicsSpace.material =  "G4_He";

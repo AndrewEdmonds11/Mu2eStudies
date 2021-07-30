@@ -1,0 +1,3 @@
+#include "Mu2eStudies/HeliumVsVacuum/fcl/EleBeamResampler.fcl"
+
+services.GeometryService.inputFile : "Mu2eStudies/HeliumVsVacuum/geom/geom_MuBeamResampler_1atmHe.txt"

@@ -1,0 +1,3 @@
+#include "Production/JobConfig/beam/EleBeamResampler.fcl"
+
+physics.filters.EarlyPrescaleFilter.nPrescale : 1

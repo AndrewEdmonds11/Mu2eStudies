@@ -1,0 +1,3 @@
+#include "Production/JobConfig/beam/POT.fcl"
+
+services.GeometryService.inputFile : "Mu2eStudies/HeliumVsVacuum/geom/geom_POT_1atmArCO2.txt"

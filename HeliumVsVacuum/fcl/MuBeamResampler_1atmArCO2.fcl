@@ -1,0 +1,4 @@
+#include "Mu2eStudies/HeliumVsVacuum/fcl/MuBeamResampler.fcl"
+
+services.GeometryService.inputFile : "Mu2eStudies/HeliumVsVacuum/geom/geom_MuBeamResampler_1atmArCO2.txt"
+
