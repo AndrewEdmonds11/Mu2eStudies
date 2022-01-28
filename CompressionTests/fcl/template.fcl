@@ -1,0 +1,3 @@
+#include "Production/JobConfig/pileup/MuStopPileup.fcl"
+physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: 70934
+physics.producers.compressDetStepMCs.debugLevel : 1

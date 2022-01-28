@@ -1,0 +1,15 @@
+#include "Production/JobConfig/cosmic/S2ResamplerCRY.fcl"
+physics.filters.cosmicResample.fileNames : ["/pnfs/mu2e/scratch/users/brownd/DataFiles/sim.owner.CosmicDSStopsCRY.version.sequencer.art"]
+
+#physics.producers.compressDetStepMCs.debugLevel : 1
+physics.producers.compressDetStepMCs.simParticleTags : [ "g4run", "cosmicResample" ]
+
+physics.filters.cosmicResample.mu2e.MaxEventsToSkip: 0
+physics.filters.cosmicResample.mu2e.debugLevel : 2
+#physics.PrimaryPath : [ @sequence::Cosmic.ResampleSequence,
+#  @sequence::Common.g4Sequence, @sequence::TrackerMC.StepSim, @sequence::CaloMC.StepSim]
+#outputs.PrimaryOutput.outputCommands : [ "keep *_*_*_*", "drop  mu2e::SimParticlemv_cosmicResample_*_*" ]
+#physics.producers.compressDetStepMCs.compressionOptions.crvStepCompressionLevel : "fullCompression"
+#  /pnfs/mu2e/tape/phy-sim/sim/mu2e/CosmicCRY/MDC2020n_10h/art/e1/cf/sim.mu2e.CosmicDSStopsCRY.MDC2020n_10h.001205_00000367.art"]
+
+
