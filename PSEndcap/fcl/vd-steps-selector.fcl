@@ -1,0 +1,54 @@
+#include "fcl/minimalMessageService.fcl"
+#include "fcl/standardServices.fcl"
+#include "CommonMC/fcl/prolog.fcl"
+
+process_name : VDStepsSelector
+
+source: {
+    module_type: RootInput
+}
+
+services: { @table::Services.Core }
+
+physics: {
+    producers: {
+        ResampleSteps : {
+	    module_type : VDStepSelector
+	    stepsTag : "BeamFilter:virtualdetector"
+	    vdId : 20
+	    upstream : true
+	}
+    }
+
+    analyzers: {
+        genCountLogger: {
+            module_type: GenEventCountReader
+        }
+        VDStepsIn: {
+            module_type: StepPointMCDumper
+            hitsInputTag: "BeamFilter:virtualdetector"
+	    writeVDHit : true
+        }
+        VDStepsOut: {
+            module_type: StepPointMCDumper
+            hitsInputTag: "ResampleSteps"
+	    writeVDHit : true
+        }
+    }
+
+  p1 : [ResampleSteps ]
+  e1 : [ genCountLogger, VDStepsIn, VDStepsOut, Output]  
+  trigger_paths : [p1]
+  end_paths      : [e1]
+}
+
+outputs : {
+    Output : {
+    	module_type : RootOutput
+	SelectEvents : [ p1 ]
+        outputCommands : [ "keep *_*_*_*" ]
+	fileName : "sim.owner.vd-steps-selector.version.sequencer.art"
+    }
+}
+
+services.TFileService.fileName : "nts.owner.vd-steps-selector.version.sequencer.root"

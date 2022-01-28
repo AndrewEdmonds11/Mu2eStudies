@@ -1,0 +1,3 @@
+#include "Production/JobConfig/beam/POT.fcl"
+
+services.GeometryService.inputFile : "Mu2eStudies/PSEndcap/geom/geom_PSEndCap_new_SolCalc-PSRot0mr.txt"

@@ -1,0 +1,3 @@
+#include "Mu2eStudies/PSEndcap/fcl/POT_PSEndCap_new_wWindowSDs.fcl"
+
+services.GeometryService.inputFile : "Mu2eStudies/PSEndcap/geom/geom_PSEndCap_newThickAl.txt"

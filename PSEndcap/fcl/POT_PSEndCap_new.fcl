@@ -1,0 +1,3 @@
+#include "Production/JobConfig/beam/POT.fcl"
+
+services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_2021_PhaseI_v02.txt"

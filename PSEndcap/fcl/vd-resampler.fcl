@@ -1,0 +1,63 @@
+#
+# Re-sample 'electron' beam entering the DS, propagate them to the detectors or stopping target, and write out the corresponding flash DetectorSteps and target mustops.
+# Note the main flash stream has a time cut to avoid energy far outside the digitization window.  A prescaled but otherwise uncut stream is used to
+# record the flash peak
+#
+# original author: Yuri Oksuzian, 2019
+# Updated for MDC2020 (DetectorSteps): D. Brown
+
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/CommonMC/fcl/prolog.fcl"
+#include "Production/JobConfig/common/prolog.fcl"
+#include "Production/JobConfig/beam/POT.fcl"
+
+process_name: VDResampler
+
+source : {
+  module_type : EmptyEvent
+  maxEvents : @nil
+}
+
+physics.filters.beamResampler: {
+      module_type: ResamplingMixer
+      fileNames: @nil
+      readMode: "sequential"
+      wrapFiles: true
+      mu2e: {
+        writeEventIDs : true
+        MaxEventsToSkip: @nil
+        debugLevel : 0
+        products: {
+          genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
+          simParticleMixer: { mixingMap: [ [ "BeamFilter", "" ] ] }
+          stepPointMCMixer: { mixingMap: [
+              [ "ResampleSteps", "" ]
+            ] }
+          volumeInfoMixer: {
+            srInput: "compressPVBeam"
+            evtOutInstanceName: "eventlevel"
+          }
+        }
+      }
+}
+
+physics.BeamPath : [ genCounter, beamResampler, @sequence::Common.g4Sequence, BeamFilter, compressPVBeam]
+physics.NeutralsPath : [ genCounter, beamResampler, @sequence::Common.g4Sequence, NeutralsFilter, compressPVNeutrals]
+  
+
+# Point Mu2eG4 to the pre-simulated data
+physics.producers.g4run.inputs: {
+  primaryType: "StepPoints"
+  primaryTag: "beamResampler"
+  inputMCTrajectories: ""
+  simStageOverride: 1
+  inputPhysVolumeMultiInfo: "beamResampler"
+  updateEventLevelVolumeInfos: {
+    input: "beamResampler:eventlevel"
+    outInstance: "eventlevel"
+  }
+}
+# copy over VD hits
+#physics.producers.g4run.SDConfig.preSimulatedHits:  ["beamResampler:virtualdetector"]
+physics.filters.beamResampler.fileNames : ["sim.owner.vd-steps-selector.version.sequencer.art"]
+physics.filters.beamResampler.mu2e.MaxEventsToSkip : 0

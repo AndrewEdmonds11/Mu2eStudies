@@ -1,0 +1,11 @@
+#include "Offline/Mu2eG4/geom/geom_2021_PhaseI_v02.txt"
+
+vector<string> bfield.innerMaps = {
+  "BFieldMaps/Mau13/PSRot0mr/DSMap.header",
+  "BFieldMaps/Mau13/PSRot0mr/PSMap.header",
+  "BFieldMaps/Mau13/PSRot0mr/TSuMap.header",
+  "BFieldMaps/Mau13/PSRot0mr/TSdMap.header",
+  "BFieldMaps/Mau13/PStoDumpAreaMap.header",
+  "BFieldMaps/Mau13/ProtonDumpAreaMap.header",
+  "BFieldMaps/Mau13/DSExtension.header"
+};

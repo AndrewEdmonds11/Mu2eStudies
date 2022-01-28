@@ -1,0 +1,49 @@
+#include "fcl/minimalMessageService.fcl"
+#include "fcl/standardServices.fcl"
+#include "CommonMC/fcl/prolog.fcl"
+
+process_name : VDSteps
+
+source: {
+    module_type: RootInput
+}
+
+services: { @table::Services.Core }
+
+physics: {
+    producers: {
+#        @table::CommonMC.producers
+    }
+
+    analyzers: {
+        genCountLogger: {
+            module_type: GenEventCountReader
+        }
+        VDSteps: {
+            module_type: StepPointMCDumperEDep
+#            hitsInputTag: "BeamFilter:virtualdetector"
+            hitsInputTag: "WindowFilter:virtualdetector"
+	    writeVDHit : true
+#            hitsInputTag: "BeamFilter:Beam"
+#            TimeOffsets :  { inputs : [ ] }
+        }
+        PrimaryBeamWindowSteps: {
+            module_type: StepPointMCDumperEDep
+            hitsInputTag: "WindowFilter:PSEnclosureWindow2"
+	    writeVDHit : true
+        }
+        TargetAccessWindowSteps: {
+            module_type: StepPointMCDumperEDep
+            hitsInputTag: "WindowFilter:PSEnclosureWindow3"
+	    writeVDHit : true
+        }
+    }
+
+  e1 : [ genCountLogger, VDSteps, PrimaryBeamWindowSteps, TargetAccessWindowSteps]  
+  end_paths      : [e1]
+}
+
+# services.SeedService.baseSeed         :  8
+# services.SeedService.maxUniqueEngines :  20
+
+services.TFileService.fileName : "window-steps.root"
