@@ -1,0 +1,19 @@
+#include "TrkAna/fcl/TrkAnaReco.fcl"
+
+physics.producers.muStopCounter : {
+  module_type : MuStopCounter
+  PBITag : "PBISim"
+  simStageEfficiencyTags : [ "MuBeamCat", "MuminusStopsCat" ]
+  verbosity : 1
+}
+
+physics.analyzers.muStopLogger : {
+  module_type : MuStopCountReader
+  muStopCountMCTag : "muStopCounter"
+}
+
+physics.TrkAnaTrigPath :  [ muStopCounter, @sequence::physics.TrkAnaTrigPath ]
+physics.TrkAnaEndPath :  [ @sequence::physics.TrkAnaEndPath, muStopLogger ]
+
+services.ProditionsService.simbookkeeper.useDb: true
+services.DbService.purpose: MDC2020i

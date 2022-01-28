@@ -1,0 +1,16 @@
+#include "Production/JobConfig/reco/Reco.fcl"
+
+physics.producers.muStopCounter : {
+  module_type : MuStopCounter
+  PBITag : "PBISim"
+  simStageEfficiencyTags : [ "MuBeamCat", "MuminusStopsCat" ]
+  verbosity : 0
+}
+
+physics.RecoPath : [ muStopCounter, @sequence::physics.RecoPath ]
+
+outputs.Output.outputCommands : [ @sequence::outputs.Output.outputCommands, 
+			      	  "keep mu2e::MuStopCountMC_*_*_*" ]
+
+services.ProditionsService.simbookkeeper.useDb: true
+services.DbService.purpose: MDC2020i
