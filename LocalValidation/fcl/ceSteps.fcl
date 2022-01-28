@@ -1,0 +1,3 @@
+#include "Production/Validation/ceSteps.fcl"
+
+physics.producers.compressDetStepMCs.debugLevel : 1

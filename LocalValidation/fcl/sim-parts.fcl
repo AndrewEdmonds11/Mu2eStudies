@@ -1,0 +1,33 @@
+#include "fcl/minimalMessageService.fcl"
+#include "fcl/standardServices.fcl"
+#include "CommonMC/fcl/prolog.fcl"
+
+process_name : SimParts
+
+source: {
+    module_type: RootInput
+}
+
+services: { @table::Services.Core }
+
+physics: {
+    producers: {
+#        @table::CommonMC.producers
+    }
+
+    analyzers: {
+        genCountLogger: {
+            module_type: GenEventCountReader
+        }
+	SimParts: {
+            module_type: SimParticleAnalyzer
+#	    g4ModuleLabel : "compressDetStepMCs"
+	    g4ModuleLabel : "compressRecoMCs"
+        }
+    }
+
+  e1 : [ genCountLogger, SimParts]  
+#  e1 : [ SimParts]  
+  end_paths      : [e1]
+}
+services.TFileService.fileName : "sim-parts.root"
