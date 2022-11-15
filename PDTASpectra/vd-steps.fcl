@@ -1,0 +1,39 @@
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/CommonMC/fcl/prolog.fcl"
+
+process_name : VDSteps
+
+source: {
+    module_type: RootInput
+}
+
+services: { @table::Services.Core }
+
+physics: {
+    producers: {
+#        @table::CommonMC.producers
+    }
+
+    analyzers: {
+        genCountLogger: {
+            module_type: GenEventCountReader
+        }
+
+        VDSteps: {
+            module_type: StepPointMCDumper
+            hitsInputTag: "compressDetStepMCs:virtualdetector"
+	    writeVDHit : true
+#            hitsInputTag: "BeamFilter:Beam"
+#            TimeOffsets :  { inputs : [ ] }
+        }
+    }
+
+  e1 : [ genCountLogger, VDSteps ]  
+  end_paths      : [e1]
+}
+
+# services.SeedService.baseSeed         :  8
+# services.SeedService.maxUniqueEngines :  20
+
+services.TFileService.fileName : "vd-steps.root"
